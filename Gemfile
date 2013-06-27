@@ -2,11 +2,13 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 
+gem 'bootstrap-sass', '2.3.2'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-
+gem 'bcrypt-ruby', '3.0.1'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -38,3 +40,10 @@ gem 'jquery-rails'
 # gem 'debugger'
 gem 'execjs'
 gem 'therubyracer'
+
+group :development, :test do
+  gem 'rspec-rails' #会自动引用RSpec
+  gem 'spork'   #引入Spork
+  gem "autotest-rails"  #与ZenTest一起实现自动化测试
+  gem "ZenTest"
+end

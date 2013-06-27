@@ -1,11 +1,15 @@
 Chat::Application.routes.draw do
+
+  get "users/new"
+  get "users/show"
   get "site/index"
-
   get "site/about"
-
   get "site/help"
-
   get "site" => "site#index"
+  
+  resources :users 
+  match '/signup',  to: 'users#new'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

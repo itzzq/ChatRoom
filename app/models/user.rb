@@ -9,10 +9,14 @@
 #  updated_at      :datetime         not null
 #  password_digest :string(255)
 #
-
 class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
+
+  validates :content, presence: true, length: { maximum: 140 }
+  validates :user_id, presence: true
+
+  has_many :microposts, dependent: :destroy
 
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
@@ -24,10 +28,17 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
+  self.per_page = 10
+
+  def feed
+    # This is preliminary. See "Following users" for the full implementation.
+    Micropost.where("user_id = ?", id)
+  end
 
   private
 
   def create_remember_token
     self.remember_token = SecureRandom.urlsafe_base64
   end
+
 end
